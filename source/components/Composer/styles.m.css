@@ -15,14 +15,15 @@
         margin-right: 15px;
         transition: border .5s ease;
         border: 1px solid var(--paletteColor5);
-        cursor: pointer;        
+        border-radius: 50%;
+        cursor: pointer;
     }
 
     & input[type='submit'] {
         position: absolute;
         right: 10px;
         bottom: 10px;
-        width: 50px;
+        width: 58px;
         height: 22px;
         transition: background-color .2s ease-in;
         border: 0;
@@ -30,6 +31,7 @@
         outline: 0;
         background-color: var(--paletteColor6);
         color: var(--paletteColor2);
+        font-size: 12px;
         letter-spacing: 1px;
         cursor: pointer;
 
@@ -37,11 +39,12 @@
             background-color: var(--paletteColor7);
         }
     }
+
     & textarea {
         width: 410px;
         height: 80px;
         margin-top: 7px;
-        transition: font-size 0.5s ease;
+        transition: font-size .5s ease;
         border: 0;
         outline: 0;
         font-size: 14px;
@@ -56,11 +59,13 @@
             transition: color .4s ease-out;
             color: var(--paletteColor5);
         }
+
         &:focus::placeholder {
             color: var(--paletteColor5);
         }
+
         &:focus {
             font-size: 24px;
         }
     }
-}    
+}
