@@ -1,5 +1,6 @@
 //Core
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 //Components
 import StatusBar from 'components/StatusBar';
@@ -10,6 +11,11 @@ import Post from 'components/Post';
 import Styles from './styles.m.css';
 
 export default class Feed extends Component {
+    static propTypes = {
+        avatar:               PropTypes.string.isRequired,
+        currentUserFirstName: PropTypes.string.isRequired,
+    }
+
     render() {
         const {
             avatar,
