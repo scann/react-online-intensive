@@ -27,12 +27,12 @@ export default class Feed extends Component {
             { id: '123', comment: 'Hi there!', created: Object(1526825076849), likes: [] },
             { id: '456', comment: 'Hello!', created: Object(1526825076855), likes: [] },
         ],
-        isPostsFetching: false,
+        isSpinning: false,
     };
 
     _setPostsFetchingState(state) {
         this.setState({
-            isPostsFetching: state,
+            isSpinning: state,
         });
     }
 
@@ -49,27 +49,21 @@ export default class Feed extends Component {
         await delay(1200);
 
         this.setState(({ posts }) => ({
-            posts:           [ post, ...posts ],
-            isPostsFetching: false,
+            posts:      [ post, ...posts ],
+            isSpinning: false,
         }));
     }
 
-    async _removePost(id) {
+    async _removePost(removeId) {
         this._setPostsFetchingState(true);
 
         await delay(1200);
 
-        const newPosts = this.state.posts.filter((post) => {
-            if (post.id !== id) {
-                return { ...post };
-            }
-
-            return false;
-        });
+        const newPosts = this.state.posts.filter(({ id }) => id !== removeId);
 
         this.setState({
-            posts:           newPosts,
-            isPostsFetching: false,
+            posts:      newPosts,
+            isSpinning: false,
         });
     }
 
@@ -98,13 +92,13 @@ export default class Feed extends Component {
         });
 
         this.setState({
-            posts:           newPosts,
-            isPostsFetching: false,
+            posts:      newPosts,
+            isSpinning: false,
         });
     }
 
     render() {
-        const { posts, isPostsFetching } = this.state;
+        const { posts, isSpinning } = this.state;
 
         const postsJSX = posts.map((post) => {
             return (
@@ -119,7 +113,7 @@ export default class Feed extends Component {
 
         return (
             <section className = { Styles.feed }>
-                <Spinner isSpinning = { isPostsFetching } />
+                <Spinner isSpinning = { isSpinning } />
                 <StatusBar />
                 <Composer _createPost = { this._createPost }/>
                 { postsJSX }
