@@ -38,14 +38,11 @@ export default class Feed extends Component {
     async _createPost(comment) {
         this._setPostsFetchingState(true);
 
-        this.setState({
-            isPostsFetching: true,
-        });
-
         const post = {
             id:      getUniqueID(),
             created: moment.utc(),
             comment,
+            likes:   [],
         };
 
         await delay(1200);
@@ -88,6 +85,8 @@ export default class Feed extends Component {
 
     render() {
         const { posts, isPostsFetching } = this.state;
+
+        console.log('posts', posts);
 
         const postsJSX = posts.map((post) => {
             return (
