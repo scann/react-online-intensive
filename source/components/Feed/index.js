@@ -50,11 +50,22 @@ export default class Feed extends Component {
                 }));
             }
         });
+
+        socket.on('like', (postJSON) => {
+            const { data: likedPost } = JSON.parse(postJSON);
+
+            this.setState(({ posts }) => ({
+                posts: posts.map(
+                    (post) => post.id === likedPost.id ? likedPost : post,
+                ),
+            }));
+        });
     }
 
     componentWillUnmout() {
         socket.removeListener('create');
         socket.removeListener('remove');
+        socket.removeListener('like');
     }
 
     _setPostsFetchingState = (state) => {
