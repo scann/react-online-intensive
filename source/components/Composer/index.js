@@ -8,8 +8,7 @@ import { withProfile } from 'components/HOC/withProfile';
 //Instruments
 import Styles from './styles.m.css';
 
-@withProfile
-export default class Composer extends Component {
+class Composer extends Component {
     static propTypes = {
         _createPost: PropTypes.func.isRequired,
     };
@@ -22,12 +21,12 @@ export default class Composer extends Component {
         this.setState({
             comment: event.target.value,
         });
-    }
+    };
 
     _handleFormSubmit = (event) => {
         event.preventDefault();
         this._submitComment();
-    }
+    };
 
     _submitComment = () =>  {
         const { comment } = this.state;
@@ -41,7 +40,7 @@ export default class Composer extends Component {
         this.setState({
             comment: '',
         });
-    }
+    };
 
     _submitOnEnter = (event) => {
         const enterKey = event.key === 'Enter';
@@ -50,7 +49,7 @@ export default class Composer extends Component {
             event.preventDefault();
             this._submitComment();
         }
-    }
+    };
 
     render() {
         const { comment } = this.state;
@@ -76,3 +75,5 @@ export default class Composer extends Component {
         );
     }
 }
+
+export default withProfile(Composer);
