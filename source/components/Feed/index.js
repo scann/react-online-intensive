@@ -1,5 +1,7 @@
 //Core
 import React, { Component } from 'react';
+import { Transition } from 'react-transition-group';
+import { fromTo } from 'gsap';
 
 //Components
 import { withProfile } from 'components/HOC/withProfile';
@@ -30,8 +32,8 @@ export default class Feed extends Component {
         socket.on('create', (postJSON) => {
             const { data: createdPost, meta } = JSON.parse(postJSON);
 
-            if (`${ currentUserFirstName } ${ currentUserLastName }` !==
-                `${ meta.authorFirstName } ${ meta.authorLastName }`
+            if (`${ currentUserFirstName } ${ currentUserLastName }`
+                !== `${ meta.authorFirstName } ${ meta.authorLastName }`
             ) {
                 this.setState(({ posts }) => ({
                     posts: [ createdPost, ...posts ],
@@ -42,8 +44,8 @@ export default class Feed extends Component {
         socket.on('remove', (postJSON) => {
             const { data: removedPost, meta } = JSON.parse(postJSON);
 
-            if (`${ currentUserFirstName } ${ currentUserLastName }` !==
-                `${ meta.authorFirstName } ${ meta.authorLastName }`
+            if (`${ currentUserFirstName } ${ currentUserLastName }`
+                !== `${ meta.authorFirstName } ${ meta.authorLastName }`
             ) {
                 this.setState(({ posts }) => ({
                     posts: posts.filter((post) => post.id !== removedPost.id),
@@ -144,6 +146,15 @@ export default class Feed extends Component {
         }));
     };
 
+    _animateComposerEnter = (composer) => {
+        fromTo(
+            composer,
+            1,
+            { opacity: 0, rotationX: 50 },
+            { opacity: 1, rotationX: 0 },
+        );
+    };
+
     render() {
         const { posts, isSpinning } = this.state;
 
@@ -164,7 +175,13 @@ export default class Feed extends Component {
             <section className = { Styles.feed }>
                 <Spinner isSpinning = { isSpinning } />
                 <StatusBar />
-                <Composer _createPost = { this._createPost }/>
+                <Transition
+                    appear
+                    in
+                    timeout = { 4000 }
+                    onEnter = { this._animateComposerEnter }>
+                    <Composer _createPost = { this._createPost }/>
+                </Transition>
                 { postsJSX }
             </section>
         );
