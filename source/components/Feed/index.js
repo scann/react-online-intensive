@@ -20,8 +20,9 @@ import { socket } from '../../socket/init';
 @withProfile
 export default class Feed extends Component {
     state = {
-        posts:      [],
-        isSpinning: false,
+        posts:       [],
+        isSpinning:  false,
+        isAnimating: true,
     };
 
     componentDidMount () {
@@ -161,8 +162,7 @@ export default class Feed extends Component {
             postman,
             1,
             { opacity: 0, x: 50 },
-            { opacity:    1, x:          0,
-                onComplete: this._animatePostmanExit(postman) },
+            { opacity: 1, x: 0 },
         );
     };
 
@@ -171,9 +171,11 @@ export default class Feed extends Component {
             postman,
             1,
             { opacity: 1, x: 0 },
-            { opacity: 0, x: 50, delay: 4 },
+            { opacity: 0, x: 50 },
         );
     };
+
+    timer = setTimeout(() => { this.setState({ isAnimating: false }); }, 4000);
 
     render() {
         const { posts, isSpinning } = this.state;
@@ -197,16 +199,17 @@ export default class Feed extends Component {
                 <StatusBar />
                 <Transition
                     appear
-                    in
+                    in = { this.state.isAnimating }
                     timeout = { 4000 }
                     onEnter = { this._animateComposerEnter }>
                     <Composer _createPost = { this._createPost }/>
                 </Transition>
                 <Transition
                     appear
-                    in
+                    in = { this.state.isAnimating }
                     timeout = { 4000 }
-                    onEnter = { this._animatePostmanEnter }>
+                    onEnter = { this._animatePostmanEnter }
+                    onExit = { this._animatePostmanExit }>
                     <Postman />
                 </Transition>
                 { postsJSX }
