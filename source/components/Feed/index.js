@@ -109,7 +109,7 @@ export default class Feed extends Component {
             posts:      [ post, ...posts ],
             isSpinning: false,
         }));
-    }
+    };
 
     _removePost = async (id) =>  {
         this._setPostsFetchingState(true);
@@ -125,7 +125,7 @@ export default class Feed extends Component {
             posts:      posts.filter((post) => post.id !== id),
             isSpinning: false,
         }));
-    }
+    };
 
     _likePost = async (id) => {
         this._setPostsFetchingState(true);
@@ -161,7 +161,8 @@ export default class Feed extends Component {
             postman,
             1,
             { opacity: 0, x: 50 },
-            { opacity: 1, x: 0 },
+            { opacity:    1, x:          0,
+                onComplete: this._animatePostmanExit(postman) },
         );
     };
 
@@ -170,7 +171,7 @@ export default class Feed extends Component {
             postman,
             1,
             { opacity: 1, x: 0 },
-            { opacity: 0, x: 50 },
+            { opacity: 0, x: 50, delay: 4 },
         );
     };
 
@@ -205,8 +206,7 @@ export default class Feed extends Component {
                     appear
                     in
                     timeout = { 4000 }
-                    onEntered = { this._animatePostmanExit }
-                    onEntering = { this._animatePostmanEnter }>
+                    onEnter = { this._animatePostmanEnter }>
                     <Postman />
                 </Transition>
                 { postsJSX }
