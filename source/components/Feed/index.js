@@ -162,7 +162,7 @@ export default class Feed extends Component {
             postman,
             1,
             { opacity: 0, x: 50 },
-            { opacity: 1, x: 0 },
+            { opacity: 1, x: 0, onComplete: this.setState({ isAnimating: false }) },
         );
     };
 
@@ -171,11 +171,10 @@ export default class Feed extends Component {
             postman,
             1,
             { opacity: 1, x: 0 },
-            { opacity: 0, x: 50 },
+            { opacity: 0, x: 50, delay: 4 },
         );
     };
 
-    timer = setTimeout(() => { this.setState({ isAnimating: false }); }, 4000);
 
     render() {
         const { posts, isSpinning } = this.state;
