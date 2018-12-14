@@ -48,7 +48,6 @@ describe('instruments:', () => {
         expect(getFullApiUrl('hello', 'world')).toBe('hello/world');
     });
     test('getFullApiUrl function should return a concatenated string with slash symbol', () => {
-        //expect(() => getFullApiUrl('hello', 'world')).stringContaining('/');
         expect(getFullApiUrl('hello', 'world')).toEqual(expect.stringContaining('/'));
     });
 });
