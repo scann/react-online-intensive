@@ -105,13 +105,9 @@ describe('composer component:', () => {
         expect(props.currentUserFirstName).toBe('Anna');
     });
 
-    test('_updateComment class method should be invoked once after cursor is placed in textarea', () => {
-        result.find('textarea').simulate('focus', {
-            target: {
-                value: '',
-            },
-        });
-        expect(result.state()).toEqual(initialState);
+    test('_updateComment class method should be invoked once on onChange event', () => {
+        _updateCommentSpy.mockClear();
+        result.find('textarea').simulate('change', { target: { value: 'hello'}});
         expect(_updateCommentSpy).toHaveBeenCalledTimes(1);
     });
 
