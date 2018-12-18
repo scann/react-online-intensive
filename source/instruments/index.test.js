@@ -32,6 +32,9 @@ describe('instruments:', () => {
         expect(getUniqueID(5)).toHaveLength(5);
         expect(getUniqueID(13)).toHaveLength(13);
     });
+    test('getUniqueID function should produce a string with 15 symbols by default, when it is called without arguments', () => {
+        expect(getUniqueID()).toHaveLength(15);
+    });
     test('getFullApiUrl should be a function', () => {
         expect(getFullApiUrl).toBeInstanceOf(Function);
     });
