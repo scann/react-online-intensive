@@ -95,6 +95,7 @@ describe('composer component:', () => {
     test('_submitComment and _handleFormSubmit class methods should be invoked once after form is submitted', () => {
         expect(_submitCommentSpy).toHaveBeenCalledTimes(1);
         expect(_handleFormSubmitSpy).toHaveBeenCalledTimes(1);
+        jest.clearAllMocks();
     });
 
     test('avatar prop should contain a string value', () => {
@@ -106,14 +107,30 @@ describe('composer component:', () => {
     });
 
     test('_updateComment class method should be invoked once on onChange event', () => {
-        _updateCommentSpy.mockClear();
         result.find('textarea').simulate('change', { target: { value: 'hello'}});
         expect(_updateCommentSpy).toHaveBeenCalledTimes(1);
+        jest.clearAllMocks();
     });
 
     test('_submitOnEnter class method should be invoked once when user pressed Enter key in textarea', () => {
         result.find('textarea').simulate('keypress', { key: 'Enter' });
         expect(_submitOnEnterSpy).toHaveBeenCalledTimes(1);
+        jest.clearAllMocks();
+    });
+
+    test('_submitComment class method should not be invoked when non-Enter key is pressed', () => {
+        result.find('textarea').simulate('keypress', { key: 'w' });
+        expect(_submitCommentSpy).toHaveBeenCalledTimes(0);
+        jest.clearAllMocks();
+    });
+
+    test('_submitComment method should return null when no text is entered in textarea', () => {
+        result.setState({
+            comment: '',
+        });
+        result.instance()._submitComment();
+        expect(_submitCommentSpy).toHaveReturnedWith(null);
+        jest.clearAllMocks();
     });
 });
 
