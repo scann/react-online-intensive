@@ -206,6 +206,7 @@ export default class Feed extends Component {
         return (
             <section className = { Styles.feed }>
                 <Spinner isSpinning = { isSpinning } />
+                <StatusBar />
                 <Transition
                     appear
                     in
