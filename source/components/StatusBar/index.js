@@ -42,6 +42,12 @@ export default class StatusBar extends Component {
         fromTo(statusBar, 1, { opacity: 0 }, { opacity: 1 });
     };
 
+    _logoutUser = () => {
+        const { _toggleLogin } = this.props;
+        window.localStorage.removeItem('fb_login');
+        _toggleLogin(false);
+    };
+
     render() {
         const {
             avatar,
@@ -73,6 +79,11 @@ export default class StatusBar extends Component {
                         <span>{currentUserFirstName}</span>
                     </Link>
                     <Link to = '/feed'>Feed</Link>
+                    <Link
+                        to = '/login'
+                        onClick = { this._logoutUser } >
+                        Выйти
+                    </Link>
                 </section>
             </Transition>
         );
