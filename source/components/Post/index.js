@@ -1,20 +1,70 @@
 //Core
 import React, { Component } from 'react';
 import moment from 'moment';
+import { func, string, object, array } from 'prop-types';
+
+//Components
+import Like from 'components/Like';
+import { withProfile } from 'components/HOC/withProfile';
 
 //Instruments
-import avatar from 'theme/assets/lisa';
-import Styles from './styles.m.css'
+import Styles from './styles.m.css';
 
+@withProfile
 export default class Post extends Component {
+    static propTypes = {
+        _likePost:   func.isRequired,
+        _removePost: func.isRequired,
+        comment:     string.isRequired,
+        created:     object.isRequired,
+        id:          string.isRequired,
+        likes:       array.isRequired,
+    };
+
+    _removePost = () => {
+        const { _removePost, id } = this.props;
+
+        _removePost(id);
+    };
+
+    _getCross = () => {
+        const { firstName, lastName, currentUserFirstName, currentUserLastName } = this.props;
+
+        return `${ firstName } ${ lastName }` === `${ currentUserFirstName } ${ currentUserLastName}`
+            ? <span
+                className = { Styles.cross }
+                onClick = { this._removePost }
+            />
+            : null;
+    };
+
     render() {
+        const { comment,
+            created,
+            _likePost,
+            id,
+            likes,
+            avatar,
+            firstName,
+            lastName,
+        } = this.props;
+
+        const cross = this._getCross();
+
         return (
-                <section className = { Styles.post }>
-                    <img src = { avatar }/>
-                    <a>Lisa Simpson</a>
-                    <time>{moment().format('MMMM D h:mm:ss a')}</time>
-                    <p>Howdy!</p>
-                </section>              
+            <section className = { Styles.post }>
+                { cross }
+                <img src = { avatar }/>
+                <a>{`${firstName} ${lastName}`}</a>
+                <time>{moment.unix(created).format('MMMM D h:mm:ss a')}
+                </time>
+                <p>{ comment }</p>
+                <Like
+                    _likePost = { _likePost }
+                    id = { id }
+                    likes = { likes }
+                />
+            </section>
         );
     }
 }
