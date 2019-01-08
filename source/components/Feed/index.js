@@ -110,7 +110,7 @@ export default class Feed extends Component {
             posts:      [ post, ...posts ],
             isSpinning: false,
         }));
-    }
+    };
 
     _removePost = async (id) =>  {
         this._setPostsFetchingState(true);
@@ -126,7 +126,7 @@ export default class Feed extends Component {
             posts:      posts.filter((post) => post.id !== id),
             isSpinning: false,
         }));
-    }
+    };
 
     _likePost = async (id) => {
         this._setPostsFetchingState(true);
