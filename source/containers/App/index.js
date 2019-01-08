@@ -19,12 +19,6 @@ export default class App extends Component {
     constructor(props) {
         super(props);
 
-        this._toggleLogin = (state) => {
-            this.setState(() => ({
-                isAuthenticated: state,
-            }));
-        };
-
         this.state = {
             avatar,
             currentUserFirstName: 'Анна',
@@ -40,6 +34,12 @@ export default class App extends Component {
             this._toggleLogin(login);
         }
     }
+
+    _toggleLogin = (state) => {
+        this.setState(() => ({
+            isAuthenticated: state,
+        }));
+    };
 
     render() {
         return (
