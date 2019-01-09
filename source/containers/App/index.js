@@ -42,25 +42,33 @@ export default class App extends Component {
     };
 
     render() {
+        const { isAuthenticated } = this.state;
+
+        const CustomRoute = (props) => {
+            if (isAuthenticated) {
+                return <Route { ...props } />;
+            }
+
+            return <Redirect to = '/login' />;
+        };
+
         return (
             <Catcher>
                 <Provider value = { this.state }>
                     <StatusBar />
                     <Switch>
-                        { this.state.isAuthenticated
-                        && <Route
-                            component = { Feed }
+                        <CustomRoute
                             path = '/feed'
-                           /> }
-                        { this.state.isAuthenticated
-                        && <Route
-                            component = { Profile }
+                            render = { () => <Feed /> }
+                        />
+                        <CustomRoute
                             path = '/profile'
-                           /> }
+                            render = { () => <Profile /> }
+                        />
                         <Route
                             _toggleLogin = { this.state._toggleLogin }
-                            component = { Login }
                             path = '/login'
+                            render = { () => <Login /> }
                         />
                         <Redirect to = '/login'/>
                     </Switch>
